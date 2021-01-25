@@ -65,9 +65,9 @@ RUN wget -q https://launchpadlibrarian.net/287101520/gcc-arm-none-eabi-5_4-2016q
     cp gcc-arm-none-eabi-5_4-2016q3/arm-none-eabi/bin/strip /home/gitpod/ultibo/core/fpc/bin/arm-ultibo-strip && \
     rm -rf gcc-arm-none-eabi-5_4-2016q3/ && \
 \
-    make -j $(nproc) distclean OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a BINUTILSPREFIX=arm-ultibo- FPCOPT="-dFPC_ARMHF" CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/ppcx64 && \
-    make -j $(nproc) all OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a BINUTILSPREFIX=arm-ultibo- FPCOPT="-dFPC_ARMHF" CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/ppcx64 && \
-    make -j $(nproc) crossinstall BINUTILSPREFIX=arm-ultibo- FPCOPT="-dFPC_ARMHF" CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPC=/home/gitpod/ultibo/core/fpc/bin/ppcx64 INSTALL_PREFIX=/home/gitpod/ultibo/core/fpc && \
+    make distclean OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a BINUTILSPREFIX=arm-ultibo- FPCOPT="-dFPC_ARMHF" CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/ppcx64 && \
+    make all OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a BINUTILSPREFIX=arm-ultibo- FPCOPT="-dFPC_ARMHF" CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/ppcx64 && \
+    make crossinstall BINUTILSPREFIX=arm-ultibo- FPCOPT="-dFPC_ARMHF" CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPC=/home/gitpod/ultibo/core/fpc/bin/ppcx64 INSTALL_PREFIX=/home/gitpod/ultibo/core/fpc && \
 \
     cp /home/gitpod/ultibo/core/fpc/source/compiler/ppcrossarm /home/gitpod/ultibo/core/fpc/bin/ppcrossarm && \
 \
@@ -113,23 +113,23 @@ RUN wget -q https://launchpadlibrarian.net/287101520/gcc-arm-none-eabi-5_4-2016q
 
 # armv7a and armv6 rtl and packages
 
-RUN make -j $(nproc) rtl_clean CROSSINSTALL=1 OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
-    make -j $(nproc) rtl OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
-    make -j $(nproc) rtl_install CROSSINSTALL=1 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPC=/home/gitpod/ultibo/core/fpc/bin/fpc INSTALL_PREFIX=/home/gitpod/ultibo/core/fpc INSTALL_UNITDIR=/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/rtl && \
+RUN make rtl_clean CROSSINSTALL=1 OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
+    make rtl OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
+    make rtl_install CROSSINSTALL=1 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPC=/home/gitpod/ultibo/core/fpc/bin/fpc INSTALL_PREFIX=/home/gitpod/ultibo/core/fpc INSTALL_UNITDIR=/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/rtl && \
 \
-    make -j $(nproc) rtl_clean CROSSINSTALL=1 OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
-    make -j $(nproc) packages_clean CROSSINSTALL=1 OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
-    make -j $(nproc) packages OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH -Fu/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/rtl" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
-    make -j $(nproc) packages_install CROSSINSTALL=1 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPC=/home/gitpod/ultibo/core/fpc/bin/fpc INSTALL_PREFIX=/home/gitpod/ultibo/core/fpc INSTALL_UNITDIR=/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/packages && \
+    make rtl_clean CROSSINSTALL=1 OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
+    make packages_clean CROSSINSTALL=1 OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
+    make packages OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH -Fu/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/rtl" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
+    make packages_install CROSSINSTALL=1 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPC=/home/gitpod/ultibo/core/fpc/bin/fpc INSTALL_PREFIX=/home/gitpod/ultibo/core/fpc INSTALL_UNITDIR=/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/packages && \
 \
-    make -j $(nproc) rtl_clean CROSSINSTALL=1 OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
-    make -j $(nproc) rtl OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
-    make -j $(nproc) rtl_install CROSSINSTALL=1 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH" OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPC=/home/gitpod/ultibo/core/fpc/bin/fpc INSTALL_PREFIX=/home/gitpod/ultibo/core/fpc INSTALL_UNITDIR=/home/gitpod/ultibo/core/fpc/units/armv6-ultibo/rtl && \
+    make rtl_clean CROSSINSTALL=1 OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
+    make rtl OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
+    make rtl_install CROSSINSTALL=1 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH" OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPC=/home/gitpod/ultibo/core/fpc/bin/fpc INSTALL_PREFIX=/home/gitpod/ultibo/core/fpc INSTALL_UNITDIR=/home/gitpod/ultibo/core/fpc/units/armv6-ultibo/rtl && \
 \
-    make -j $(nproc) rtl_clean CROSSINSTALL=1 OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
-    make -j $(nproc) packages_clean CROSSINSTALL=1 OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
-    make -j $(nproc) packages OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH -Fu/home/gitpod/ultibo/core/fpc/units/armv6-ultibo/rtl" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
-    make -j $(nproc) packages_install CROSSINSTALL=1 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH" OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPC=/home/gitpod/ultibo/core/fpc/bin/fpc INSTALL_PREFIX=/home/gitpod/ultibo/core/fpc INSTALL_UNITDIR=/home/gitpod/ultibo/core/fpc/units/armv6-ultibo/packages
+    make rtl_clean CROSSINSTALL=1 OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
+    make packages_clean CROSSINSTALL=1 OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
+    make packages OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH -Fu/home/gitpod/ultibo/core/fpc/units/armv6-ultibo/rtl" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
+    make packages_install CROSSINSTALL=1 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH" OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPC=/home/gitpod/ultibo/core/fpc/bin/fpc INSTALL_PREFIX=/home/gitpod/ultibo/core/fpc INSTALL_UNITDIR=/home/gitpod/ultibo/core/fpc/units/armv6-ultibo/packages
 
 RUN cd /home/gitpod/ultibo/core/fpc/bin && \
     touch qemuvpb.cfg  && \
@@ -143,3 +143,5 @@ RUN cd /home/gitpod/ultibo/core/fpc/bin && \
     echo '-Fu/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/rtl' >> qemuvpb.cfg && \
     echo '-Fu/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/packages' >> qemuvpb.cfg && \
     echo '-Fl/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/lib' >> qemuvpb.cfg
+
+RUN sudo sed -i s/640x480/1024x768/ /usr/bin/start-vnc-session.sh
