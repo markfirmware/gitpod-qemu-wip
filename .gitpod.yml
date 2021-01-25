@@ -1,0 +1,8 @@
+image:
+  file: gitpod-qemu.dockerfile
+
+ports:
+  - port: 5900
+    onOpen: ignore
+  - port: 6080
+    onOpen: open-browser
