@@ -24,10 +24,11 @@ RUN sudo apt-get update && \
 
 RUN sudo sed -i s/1920x1080/1024x768/ /usr/bin/start-vnc-session.sh
 
-RUN wget -q -O fpc_3.0.0-151205_amd64.deb 'http://downloads.sourceforge.net/project/lazarus/Lazarus%20Linux%20amd64%20DEB/Lazarus%201.6.2/fpc_3.0.0-151205_amd64.deb?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Flazarus%2Ffiles%2FLazarus%2520Linux%2520amd64%2520DEB%2FLazarus%25201.6.2%2F&ts=1483204950&use_mirror=superb-sea2' && \
+RUN echo && echo ultibo && \
+    wget -q -O fpc_3.0.0-151205_amd64.deb 'http://downloads.sourceforge.net/project/lazarus/Lazarus%20Linux%20amd64%20DEB/Lazarus%201.6.2/fpc_3.0.0-151205_amd64.deb?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Flazarus%2Ffiles%2FLazarus%2520Linux%2520amd64%2520DEB%2FLazarus%25201.6.2%2F&ts=1483204950&use_mirror=superb-sea2' && \
     sudo dpkg -i fpc_3.0.0-151205_amd64.deb && \
     rm fpc_3.0.0-151205_amd64.deb && \
-    fpc -i
+    fpc -iV
 
 RUN sudo apt-get update && sudo apt-get install -y bzip2 libc-dev libc6-i386 make unzip && \
     wget -q https://github.com/ultibohub/FPC/archive/master.zip && \
@@ -46,8 +47,8 @@ RUN sudo apt-get update && sudo apt-get install -y bzip2 libc-dev libc6-i386 mak
     cd /home/gitpod/ultibo/core/fpc/source && \
     echo && echo first make && \
     make -j $(nproc) distclean > distclean.1.log && \
-    make all OS_TARGET=linux CPU_TARGET=x86_64 && \
-    make install OS_TARGET=linux CPU_TARGET=x86_64 INSTALL_PREFIX=/home/gitpod/ultibo/core/fpc && \
+    make > first.make.all.log all OS_TARGET=linux CPU_TARGET=x86_64 && \
+    make > first.make.install.log install OS_TARGET=linux CPU_TARGET=x86_64 INSTALL_PREFIX=/home/gitpod/ultibo/core/fpc && \
     cp /home/gitpod/ultibo/core/fpc/source/compiler/ppcx64 /home/gitpod/ultibo/core/fpc/bin/ppcx64 && \
     /home/gitpod/ultibo/core/fpc/bin/fpcmkcfg -d basepath=/home/gitpod/ultibo/core/fpc/lib/fpc/3.1.1 -o /home/gitpod/ultibo/core/fpc/bin/fpc.cfg && \
     /home/gitpod/ultibo/core/fpc/bin/fpc -i
@@ -68,7 +69,7 @@ RUN wget -q https://launchpadlibrarian.net/287101520/gcc-arm-none-eabi-5_4-2016q
 \
     echo && echo second make && \
     make -j $(nproc) distclean > distclean.2.log OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a BINUTILSPREFIX=arm-ultibo- FPCOPT="-dFPC_ARMHF" CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/ppcx64 && \
-    make all OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a BINUTILSPREFIX=arm-ultibo- FPCOPT="-dFPC_ARMHF" CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/ppcx64 && \
+    make > second.make.all.log all OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a BINUTILSPREFIX=arm-ultibo- FPCOPT="-dFPC_ARMHF" CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" FPC=/home/gitpod/ultibo/core/fpc/bin/ppcx64 && \
     make crossinstall BINUTILSPREFIX=arm-ultibo- FPCOPT="-dFPC_ARMHF" CROSSOPT="-CpARMV7A -CfVFPV3 -CIARM -CaEABIHF -OoFASTMATH" OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv7a FPC=/home/gitpod/ultibo/core/fpc/bin/ppcx64 INSTALL_PREFIX=/home/gitpod/ultibo/core/fpc && \
 \
     cp /home/gitpod/ultibo/core/fpc/source/compiler/ppcrossarm /home/gitpod/ultibo/core/fpc/bin/ppcrossarm
@@ -124,6 +125,3 @@ RUN touch make_cfg_file.sh && \
 RUN mkdir test
 COPY build-examples.sh test
 RUN cd test && ./build-examples.sh && cd .. && rm -rf test
-
-RUN sudo apt-get fpc
-
