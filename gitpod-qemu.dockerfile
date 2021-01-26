@@ -95,60 +95,35 @@ RUN echo && echo armv7a rtl && \
     make > packages.armv6.log -j $(nproc) packages OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH -Fu/home/gitpod/ultibo/core/fpc/units/armv6-ultibo/rtl" FPC=/home/gitpod/ultibo/core/fpc/bin/fpc && \
     make packages_install CROSSINSTALL=1 FPCFPMAKE=/home/gitpod/ultibo/core/fpc/bin/fpc CROSSOPT="-CpARMV6 -CfVFPV2 -CIARM -CaEABIHF -OoFASTMATH" OS_TARGET=ultibo CPU_TARGET=arm SUBARCH=armv6 FPC=/home/gitpod/ultibo/core/fpc/bin/fpc INSTALL_PREFIX=/home/gitpod/ultibo/core/fpc INSTALL_UNITDIR=/home/gitpod/ultibo/core/fpc/units/armv6-ultibo/packages
 
-RUN cd /home/gitpod/ultibo/core/fpc/bin && \
-\
-    touch qemuvpb.cfg && \
-    echo '#' >> qemuvpb.cfg && \
-    echo '# QEMU arm7a specific config file' >> qemuvpb.cfg && \
-    echo '#' >> qemuvpb.cfg && \
-    echo '-CfVFPV3' >> qemuvpb.cfg && \
-    echo '-CIARM' >> qemuvpb.cfg && \
-    echo '-CaEABIHF' >> qemuvpb.cfg && \
-    echo '-OoFASTMATH' >> qemuvpb.cfg && \
-    echo '-Fu/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/rtl' >> qemuvpb.cfg && \
-    echo '-Fu/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/packages' >> qemuvpb.cfg && \
-    echo '-Fl/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/lib' >> qemuvpb.cfg && \
-\
-    touch rpi.cfg && \
-    echo '#' >> rpi.cfg  && \
-    echo '# Raspberry Pi (A/B/A+/B+/Zero) specific config file' >> rpi.cfg  && \
-    echo '#' >> rpi.cfg  && \
-    echo '-CfVFPV2' >> rpi.cfg  && \
-    echo '-CIARM' >> rpi.cfg  && \
-    echo '-CaEABIHF' >> rpi.cfg  && \
-    echo '-OoFASTMATH' >> rpi.cfg  && \
-    echo '-Fu/home/gitpod/ultibo/core/fpc/units/armv6-ultibo/rtl' >> rpi.cfg  && \
-    echo '-Fu/home/gitpod/ultibo/core/fpc/units/armv6-ultibo/packages' >> rpi.cfg  && \
-    echo '-Fl/home/gitpod/ultibo/core/fpc/units/armv6-ultibo/lib' >> rpi.cfg  && \
-\ 
-    touch rpi2.cfg && \
-    echo '#' >> rpi2.cfg  && \
-    echo '# Raspberry Pi 2B specific config file' >> rpi2.cfg  && \
-    echo '#' >> rpi2.cfg  && \
-    echo '-CfVFPV3' >> rpi2.cfg  && \
-    echo '-CIARM' >> rpi2.cfg  && \
-    echo '-CaEABIHF' >> rpi2.cfg  && \
-    echo '-OoFASTMATH' >> rpi2.cfg  && \
-    echo '-Fu/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/rtl' >> rpi2.cfg  && \
-    echo '-Fu/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/packages' >> rpi2.cfg  && \
-    echo '-Fl/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/lib' >> rpi2.cfg  && \
-\
-    touch rpi3.cfg && \
-    echo '#' >> rpi3.cfg && \
-    echo '# Raspberry Pi 3B specific config file' >> rpi3.cfg && \
-    echo '#' >> rpi3.cfg && \
-    echo '-CfVFPV3' >> rpi3.cfg && \
-    echo '-CIARM' >> rpi3.cfg && \
-    echo '-CaEABIHF' >> rpi3.cfg && \
-    echo '-OoFASTMATH' >> rpi3.cfg && \
-    echo '-Fu/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/rtl' >> rpi3.cfg && \
-    echo '-Fu/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/packages' >> rpi3.cfg && \
-    echo '-Fl/home/gitpod/ultibo/core/fpc/units/armv7-ultibo/lib' >> rpi3.cfg && \
-\
-    head -20 *.cfg
-
 WORKDIR /home/gitpod
+
+RUN touch make_cfg_file.sh && \
+    echo >> make_cfg_file.sh '#!/bin/bash' && \
+    echo >> make_cfg_file.sh 'file_name=$1' && \
+    echo >> make_cfg_file.sh 'message=$2' && \
+    echo >> make_cfg_file.sh 'arch=$3' && \
+    echo >> make_cfg_file.sh 'fpv=$4' && \
+    echo >> make_cfg_file.sh 'cd /home/gitpod/ultibo/core/fpc/bin' && \
+    echo >> make_cfg_file.sh 'touch $file_name' && \
+    echo >> make_cfg_file.sh 'echo >> $file_name "#"' && \
+    echo >> make_cfg_file.sh 'echo >> $file_name "# $message specific config file"' && \
+    echo >> make_cfg_file.sh 'echo >> $file_name "#"' && \
+    echo >> make_cfg_file.sh 'echo >> $file_name "-CfV$fpv"' && \
+    echo >> make_cfg_file.sh 'echo >> $file_name "-CIARM"' && \
+    echo >> make_cfg_file.sh 'echo >> $file_name "-CaEABIHF"' && \
+    echo >> make_cfg_file.sh 'echo >> $file_name "-OoFASTMATH"' && \
+    echo >> make_cfg_file.sh 'echo >> $file_name "-Fu/home/gitpod/ultibo/core/fpc/units/$arch-ultibo/rtl"' && \
+    echo >> make_cfg_file.sh 'echo >> $file_name "-Fu/home/gitpod/ultibo/core/fpc/units/$arch-ultibo/packages"' && \
+    echo >> make_cfg_file.sh 'echo >> $file_name "-Fl/home/gitpod/ultibo/core/fpc/units/$arch-ultibo/lib"' && \
+    chmod u+x make_cfg_file.sh && \
+    ./make_cfg_file.sh qemuvpb.cfg "QEMU armv7" armv7 FPV3 && \
+    ./make_cfg_file.sh rpi.cfg "Raspberry Pi (A/B/A+/B+/Zero)" armv6 FPV2 && \
+    ./make_cfg_file.sh rpi2.cfg "Raspberry Pi 2B" armv7 FPV3 && \
+    ./make_cfg_file.sh rpi3.cfg "Raspberry Pi 3B" armv7 FPV3
 
 RUN mkdir test
 COPY build-examples.sh test
 RUN cd test && ./build-examples.sh && cd .. && rm -rf test
+
+RUN sudo apt-get fpc
+
