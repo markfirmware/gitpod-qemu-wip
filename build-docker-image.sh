@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-docker build -t markformware/abc -f gitpod-qemu.dockerfile .
+docker build -t markformware/gitpod-qemu -f gitpod-qemu.dockerfile . |& tee build.log
